@@ -29,7 +29,7 @@ start_time = datetime.now()
 
 while True:
   try:
-	#socket setup
+    #socket setup
     TIMEOUT=0.4
     s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(TIMEOUT)
