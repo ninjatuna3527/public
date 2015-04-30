@@ -14,10 +14,13 @@ except:
   raise Exception("Please restart this script with admin privileges")
 
 #cygwin handling of os.system call if ran as shell script
+print  platform.system()
 if "CYGWIN" in platform.system():
   shaiya_cmd = "C:/AeriaGames/Shaiya/game.exe start game"
+  clear_cmd = "printf '\033c'"
 else:
   shaiya_cmd = "C:\\AeriaGames\\Shaiya\\game.exe start game"
+  clear_cmd = "cls"
 
 #shaiya login server config as of 29/04/2015
 shaiya_ip="108.163.135.198"
@@ -29,7 +32,7 @@ start_time = datetime.now()
 
 while True:
   try:
-    #socket setup
+	#socket setup
     TIMEOUT=0.4
     s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(TIMEOUT)
@@ -42,7 +45,7 @@ while True:
       sys.exit(0)
   except (socket.timeout, socket.error) as e:
     tries+=1
-    os.system("cls")
+    os.system(clear_cmd)
     print "started: {0}\ntries:{1}\ntime elapsed:{2}".format(start_time, tries, str(datetime.now()-start_time))
     time.sleep(5)
   
