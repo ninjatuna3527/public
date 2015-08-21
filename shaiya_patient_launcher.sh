@@ -7,20 +7,26 @@ import os
 import platform
 import sys
 
-#check privs (need admin to instant start shaiya)
-try:
-  os.listdir(os.sep.join([os.environ.get('SystemRoot','C:\\windows'),'temp']))
-except:
-  raise Exception("Please restart this script with admin privileges")
+opsys = platform.system()
+if opsys !="Linux":
+  #check privs (need admin to instant start shaiya)
+  try:
+    os.listdir(os.sep.join([os.environ.get('SystemRoot','C:\\windows'),'temp']))
+  except:
+    raise Exception("Please restart this script with admin privileges")
 
 #cygwin handling of os.system call if ran as shell script
-print  platform.system()
-if "CYGWIN" in platform.system():
+print  opsys
+if "CYGWIN" in opsys:
   shaiya_cmd = "C:/AeriaGames/Shaiya/game.exe start game"
   clear_cmd = "printf '\033c'"
+elif "Linux" in opsys:
+  shaiya_cmd = "~/.wine/drive_c/AeriaGames/Shaiya/game.exe start game"
+  clear_cmd = "clear"
 else:
   shaiya_cmd = "C:\\AeriaGames\\Shaiya\\game.exe start game"
   clear_cmd = "cls"
+
 
 #shaiya login server config as of 29/04/2015
 shaiya_ip="108.163.135.198"
@@ -32,7 +38,7 @@ start_time = datetime.now()
 
 while True:
   try:
-	#socket setup
+    #socket setup
     TIMEOUT=0.4
     s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(TIMEOUT)
@@ -48,4 +54,3 @@ while True:
     os.system(clear_cmd)
     print "started: {0}\ntries:{1}\ntime elapsed:{2}".format(start_time, tries, str(datetime.now()-start_time))
     time.sleep(5)
-  
